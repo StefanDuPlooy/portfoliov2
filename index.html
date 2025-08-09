@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stefan du Plooy - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -29,18 +32,28 @@
       <!-- Contact Block -->
       <div class="cv-block" id="contactBlock">
         <h3>Contact</h3>
-        <p><strong>Phone:</strong> +27 81 557 7056</p>
-        <p><strong>Address:</strong> Northcliff, Johannesburg</p>
-        <div class="contact-buttons">
-          <a href="mailto:stefanduplooy3@gmail.com" class="contact-btn email-btn">
-            <span class="btn-icon">✉</span>
-            <span class="btn-text">Email</span>
-          </a>
-          <a href="https://www.linkedin.com/in/stefan-du-plooy-96906b206" target="_blank" class="contact-btn linkedin-btn">
-            <svg class="btn-icon linkedin-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20.447 20.452H16.893V14.883C16.893 13.555 16.866 11.846 15.041 11.846C13.188 11.846 12.905 13.291 12.905 14.785V20.452H9.351V9H12.765V10.561H12.811C13.288 9.661 14.448 8.711 16.181 8.711C19.782 8.711 20.448 11.081 20.448 14.166V20.452H20.447ZM5.337 7.433C4.193 7.433 3.274 6.507 3.274 5.366C3.274 4.225 4.194 3.299 5.337 3.299C6.477 3.299 7.401 4.225 7.401 5.366C7.401 6.507 6.476 7.433 5.337 7.433ZM7.119 20.452H3.555V9H7.119V20.452ZM22.225 0H1.771C0.792 0 0 0.774 0 1.729V22.271C0 23.227 0.792 24 1.771 24H22.222C23.2 24 24 23.227 24 22.271V1.729C24 0.774 23.2 0 22.222 0H22.225Z" fill="currentColor"/>
+        <div class="contact-grid">
+          <div class="contact-info-item">
+            <span class="contact-label">Phone</span>
+            <span class="contact-value">+27 81 557 7056</span>
+          </div>
+          <div class="contact-info-item">
+            <span class="contact-label">Location</span>
+            <span class="contact-value">Northcliff, JHB</span>
+          </div>
+        </div>
+        <div class="contact-actions">
+          <a href="mailto:stefanduplooy3@gmail.com" class="contact-action">
+            <svg class="action-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
             </svg>
-            <span class="btn-text">LinkedIn</span>
+            <span>Email</span>
+          </a>
+          <a href="https://www.linkedin.com/in/stefan-du-plooy-96906b206" target="_blank" class="contact-action">
+            <svg class="action-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z" fill="currentColor"/>
+            </svg>
+            <span>LinkedIn</span>
           </a>
         </div>
       </div>
@@ -125,13 +138,6 @@
           </div>
         </div>
         <div class="skills-section">
-          <h4>Languages:</h4>
-          <div class="skills-grid">
-            <span class="skill-tag">English</span>
-            <span class="skill-tag">Afrikaans</span>
-          </div>
-        </div>
-        <div class="skills-section">
           <h4>Other:</h4>
           <div class="skills-grid">
             <span class="skill-tag">Agile</span>
@@ -150,6 +156,13 @@
             <span class="skill-tag">Adaptability</span>
           </div>
         </div>
+        <div class="skills-section">
+          <h4>Languages:</h4>
+          <div class="skills-grid">
+            <span class="skill-tag">English</span>
+            <span class="skill-tag">Afrikaans</span>
+          </div>
+        </div>
       </div>
 
       <!-- Experience Block -->
@@ -158,17 +171,17 @@
         <div class="experience-item">
           <h4>Class Assistant (AI)</h4>
           <p>North-West University | 2025</p>
-          <p>
-            Assisted lecturer with class sessions and marking of assessments
-          </p>
+          <ul>
+            <li>Assisted lecturer with class sessions and marking of assessments</li>
+          </ul>
         </div>
         <div class="experience-item">
           <h4>Lab Assistant (UI Programming)</h4>
           <p>North-West University | 2023</p>
-          <p>
-            Assisted lecturers with practical lab sessions and tutorials. Helped
-            mark assessments and troubleshoot technical lab issues
-          </p>
+          <ul>
+            <li>Assisted lecturers with practical lab sessions and tutorials</li>
+            <li>Helped mark assessments and troubleshoot technical lab issues</li>
+          </ul>
         </div>
       </div>
 
