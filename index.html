@@ -1,18 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div id="container" class="start">
-    <div class="block pos1 size-lg">Block 1</div>
-    <div class="block pos2 size-md">Block 2</div>
-    <div class="block pos3 size-sm">Block 3</div>
-    <div class="block pos4 size-md">Block 4</div>
-  </div>
-  <script src="script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stefan du Plooy - Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Initial picture in center -->
+      <div class="picture-block" id="pictureBlock">
+        <img
+          src="your-profile-picture.jpg"
+          alt="Profile Picture"
+          class="profile-img"
+        />
+      </div>
+
+      <!-- Header Block - Long block at top -->
+      <div class="cv-block" id="headerBlock">
+        <h2>Stefan du Plooy</h2>
+        <p>
+          BSc Hons Computer Science & Information Technology | North-West
+          University
+        </p>
+      </div>
+
+      <!-- Contact Block -->
+      <div class="cv-block" id="contactBlock">
+        <h3>Contact</h3>
+        <p><strong>Phone:</strong> +27 81 557 7056</p>
+        <p><strong>Address:</strong> Northcliff, Johannesburg</p>
+        <div class="contact-buttons">
+          <a href="mailto:stefanduplooy3@gmail.com" class="contact-btn email-btn">
+            <span class="btn-icon">✉</span>
+            <span class="btn-text">Email</span>
+          </a>
+          <a href="https://www.linkedin.com/in/stefan-du-plooy-96906b206" target="_blank" class="contact-btn linkedin-btn">
+            <svg class="btn-icon linkedin-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20.447 20.452H16.893V14.883C16.893 13.555 16.866 11.846 15.041 11.846C13.188 11.846 12.905 13.291 12.905 14.785V20.452H9.351V9H12.765V10.561H12.811C13.288 9.661 14.448 8.711 16.181 8.711C19.782 8.711 20.448 11.081 20.448 14.166V20.452H20.447ZM5.337 7.433C4.193 7.433 3.274 6.507 3.274 5.366C3.274 4.225 4.194 3.299 5.337 3.299C6.477 3.299 7.401 4.225 7.401 5.366C7.401 6.507 6.476 7.433 5.337 7.433ZM7.119 20.452H3.555V9H7.119V20.452ZM22.225 0H1.771C0.792 0 0 0.774 0 1.729V22.271C0 23.227 0.792 24 1.771 24H22.222C23.2 24 24 23.227 24 22.271V1.729C24 0.774 23.2 0 22.222 0H22.225Z" fill="currentColor"/>
+            </svg>
+            <span class="btn-text">LinkedIn</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Profile Block -->
+      <div class="cv-block" id="profileBlock">
+        <h3>Profile</h3>
+        <p>
+          I am a motivated and detail-oriented Information Technology graduate,
+          having completed my BSc with distinctions in all modules. I am
+          currently completing my honours programme in 2025, driven by a strong
+          passion for computer science and information systems. I am actively
+          seeking opportunities to apply my technical skills in a dynamic and
+          collaborative environment.
+        </p>
+      </div>
+
+      <!-- Education Block -->
+      <div class="cv-block" id="educationBlock">
+        <h3>Education</h3>
+        <div class="education-item">
+          <h4>BSc Hons in Computer Science and Information Technology</h4>
+          <p>North-West University | 2025 – 2025</p>
+          <ul>
+            <li>
+              Focus Areas: AI, Cybersecurity, Information System Engineering,
+              Decision Support Systems
+            </li>
+            <li>
+              Research Project: Using depth cameras to model student
+              interactions in classrooms
+            </li>
+            <li>Obtained distinctions for all modules in first semester</li>
+          </ul>
+        </div>
+        <div class="education-item">
+          <h4>BSc in Information Technology</h4>
+          <p>North-West University | 2022 – 2024</p>
+          <ul>
+            <li>Notable Modules: Coding Modules, OOP, Databases, AI, Data Structures & Algorithms, Cybersecurity, Systems Engineering</li>
+            <li>Completed with distinctions in all (30) modules</li>
+            <li>GPA: 86%</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Skills Block -->
+      <div class="cv-block" id="skillsBlock">
+        <h3>Skills</h3>
+        <div class="skills-section">
+          <h4>Programming Languages:</h4>
+          <div class="skills-grid">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">C#</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">HTML/CSS</span>
+            <span class="skill-tag">C/C++</span>
+          </div>
+        </div>
+        <div class="skills-section">
+          <h4>Tools & Frameworks:</h4>
+          <div class="skills-grid">
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">VS Code</span>
+            <span class="skill-tag">Visual Studio 2022</span>
+            <span class="skill-tag">.NET</span>
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">Angular</span>
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">Spring Boot</span>
+            <span class="skill-tag">MATLAB</span>
+          </div>
+        </div>
+        <div class="skills-section">
+          <h4>Databases:</h4>
+          <div class="skills-grid">
+            <span class="skill-tag">Oracle</span>
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">MongoDB</span>
+          </div>
+        </div>
+        <div class="skills-section">
+          <h4>Languages:</h4>
+          <div class="skills-grid">
+            <span class="skill-tag">English</span>
+            <span class="skill-tag">Afrikaans</span>
+          </div>
+        </div>
+        <div class="skills-section">
+          <h4>Other:</h4>
+          <div class="skills-grid">
+            <span class="skill-tag">Agile</span>
+            <span class="skill-tag">REST APIs</span>
+            <span class="skill-tag">LaTeX</span>
+          </div>
+        </div>
+        <div class="skills-section">
+          <h4>Soft Skills:</h4>
+          <div class="skills-grid">
+            <span class="skill-tag">Communication</span>
+            <span class="skill-tag">Problem Solving</span>
+            <span class="skill-tag">Teamwork</span>
+            <span class="skill-tag">Time Management</span>
+            <span class="skill-tag">Resourcefulness</span>
+            <span class="skill-tag">Adaptability</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experience Block -->
+      <div class="cv-block" id="experienceBlock">
+        <h3>Experience</h3>
+        <div class="experience-item">
+          <h4>Class Assistant (AI)</h4>
+          <p>North-West University | 2025</p>
+          <p>
+            Assisted lecturer with class sessions and marking of assessments
+          </p>
+        </div>
+        <div class="experience-item">
+          <h4>Lab Assistant (UI Programming)</h4>
+          <p>North-West University | 2023</p>
+          <p>
+            Assisted lecturers with practical lab sessions and tutorials. Helped
+            mark assessments and troubleshoot technical lab issues
+          </p>
+        </div>
+      </div>
+
+      <!-- Projects Block -->
+      <div class="cv-block" id="projectsBlock">
+        <h3>Projects</h3>
+        <div class="project-item">
+          <h4>Human Movement Sciences Teaching and Learning System</h4>
+          <p>
+            Developed a multi-platform system for NWU's Faculty of Education
+            that enables students to upload video assignments via a mobile app
+            and allows lecturers to stream, assess, and provide feedback through
+            a web interface. Included video compression, secure login, user roles, and data management.
+          </p>
+          <p><em>Tools:</em> MongoDB, Express, Angular, Node.js</p>
+        </div>
+        <div class="project-item">
+          <h4>Healthcare Management System</h4>
+          <p>
+            Built a desktop system for a healthcare practice to manage patients,
+            doctors, appointments, and prescriptions with role-based access and
+            data validation.
+          </p>
+          <p><em>Tools:</em> C# and .NET</p>
+        </div>
+        <div class="project-item">
+          <h4>Airbnb and Crime Analytics System</h4>
+          <p>
+            Designed and implemented a relational database and SQL-based
+            analytics system to explore how crime rates affect Airbnb pricing,
+            occupancy, and guest reviews in Cape Town. Included geospatial analysis, review keyword extraction, and performance metrics using crime data.
+          </p>
+          <p><em>Tools:</em> Oracle DB, SQL, ER Modelling, Data Analysis</p>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>
