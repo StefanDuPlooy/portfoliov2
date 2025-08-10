@@ -10,6 +10,26 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- Spinning Icon -->
+    <div class="spinning-icon">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Orbital rings -->
+        <ellipse cx="12" cy="12" rx="9" ry="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.8"/>
+        <ellipse cx="12" cy="12" rx="9" ry="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.8" transform="rotate(60 12 12)"/>
+        <ellipse cx="12" cy="12" rx="9" ry="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.8" transform="rotate(120 12 12)"/>
+        <!-- Central nucleus -->
+        <circle cx="12" cy="12" r="2" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.5"/>
+      </svg>
+    </div>
+    
+    <!-- Color Theme Toggle Button -->
+    <button id="themeToggle" class="theme-toggle">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3V5M18.364 6.636L16.95 8.05M21 12H19M18.364 17.364L16.95 15.95M12 19V21M7.05 17.364L5.636 15.95M5 12H3M7.05 6.636L5.636 8.05M15 12C15 13.657 13.657 15 12 15C10.343 15 9 13.657 9 12C9 10.343 10.343 9 12 9C13.657 9 15 10.343 15 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    
     <div class="container">
       <!-- Initial picture in center -->
       <div class="picture-block" id="pictureBlock">
@@ -73,30 +93,44 @@
 
       <!-- Education Block -->
       <div class="cv-block" id="educationBlock">
-        <h3>Education</h3>
-        <div class="education-item">
-          <h4>BSc Hons in Computer Science and Information Technology</h4>
-          <p>North-West University | 2025 – 2025</p>
-          <ul>
-            <li>
-              Focus Areas: AI, Cybersecurity, Information System Engineering,
-              Decision Support Systems
-            </li>
-            <li>
-              Research Project: Using depth cameras to model student
-              interactions in classrooms
-            </li>
-            <li>Obtained distinctions for all modules in first semester</li>
-          </ul>
+        <h3>Experience</h3>
+        
+        <!-- Class Assistant -->
+        <div class="experience-item modern-exp">
+          <div class="exp-header">
+            <h4>Class Assistant (AI)</h4>
+            <span class="exp-year">2025</span>
+          </div>
+          <div class="exp-details">
+            <span class="institution">North-West University</span>
+          </div>
+          <div class="exp-content">
+            <p><strong>Key Responsibilities:</strong></p>
+            <ul>
+              <li>Assisted lecturer with AI course sessions and tutorials</li>
+              <li>Supported marking and assessment of student assignments</li>
+            </ul>
+          </div>
         </div>
-        <div class="education-item">
-          <h4>BSc in Information Technology</h4>
-          <p>North-West University | 2022 – 2024</p>
-          <ul>
-            <li>Notable Modules: Coding Modules, OOP, Databases, AI, Data Structures & Algorithms, Cybersecurity, Systems Engineering</li>
-            <li>Completed with distinctions in all (30) modules</li>
-            <li>GPA: 86%</li>
-          </ul>
+
+        <!-- Lab Assistant -->
+        <div class="experience-item modern-exp">
+          <div class="exp-header">
+            <h4>Lab Assistant (UI Programming)</h4>
+            <span class="exp-year">2023</span>
+          </div>
+          <div class="exp-details">
+            <span class="institution">North-West University</span>
+          </div>
+          <div class="exp-content">
+            <p><strong>Key Responsibilities:</strong></p>
+            <ul>
+              <li>Facilitated UI programming lab sessions and tutorials</li>
+              <li>Guided students through practical coding exercises</li>
+              <li>Marked assessments and provided constructive feedback</li>
+              <li>Troubleshot technical issues and debugging challenges</li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -156,32 +190,25 @@
             <span class="skill-tag">Adaptability</span>
           </div>
         </div>
-        <div class="skills-section">
-          <h4>Languages:</h4>
-          <div class="skills-grid">
-            <span class="skill-tag">English</span>
-            <span class="skill-tag">Afrikaans</span>
-          </div>
-        </div>
       </div>
 
       <!-- Experience Block -->
       <div class="cv-block" id="experienceBlock">
-        <h3>Experience</h3>
-        <div class="experience-item">
-          <h4>Class Assistant (AI)</h4>
-          <p>North-West University | 2025</p>
-          <ul>
-            <li>Assisted lecturer with class sessions and marking of assessments</li>
-          </ul>
+        <h3>Education</h3>
+        
+        <div class="education-item">
+          <h4>BSc Hons in Computer Science and Information Technology</h4>
+          <p><em>North-West University (2025) - In Progress</em></p>
+          <p>Focus Areas: AI, Cybersecurity, Information System Engineering, Decision Support Systems</p>
+          <p>Research: Using depth cameras to model student interactions in classrooms</p>
+          <p>Achievement: 100% distinctions (first semester)</p>
         </div>
-        <div class="experience-item">
-          <h4>Lab Assistant (UI Programming)</h4>
-          <p>North-West University | 2023</p>
-          <ul>
-            <li>Assisted lecturers with practical lab sessions and tutorials</li>
-            <li>Helped mark assessments and troubleshoot technical lab issues</li>
-          </ul>
+        
+        <div class="education-item">
+          <h4>BSc in Information Technology</h4>
+          <p><em>North-West University (2022 – 2024) - Completed</em></p>
+          <p>Core Modules: OOP, Databases, AI, Data Structures, Algorithms, Cybersecurity, Systems Engineering</p>
+          <p>Achievement: 86% GPA, 30/30 distinctions</p>
         </div>
       </div>
 

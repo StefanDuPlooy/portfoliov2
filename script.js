@@ -1,9 +1,145 @@
 document.addEventListener('DOMContentLoaded', function() {
     const pictureBlock = document.getElementById('pictureBlock');
     const cvBlocks = document.querySelectorAll('.cv-block');
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
     
     // Animation sequence controller
     let animationStarted = false;
+    
+    // Theme toggle functionality
+    let isDarkTheme = false;
+    
+    themeToggle.addEventListener('click', function() {
+        isDarkTheme = !isDarkTheme;
+        
+        // Trigger fast spin on spinning icon
+        const spinningIcon = document.querySelector('.spinning-icon');
+        if (spinningIcon) {
+            spinningIcon.classList.remove('started');
+            spinningIcon.classList.add('theme-change-spin');
+            setTimeout(() => {
+                spinningIcon.classList.remove('theme-change-spin');
+                spinningIcon.classList.add('started');
+            }, 1500);
+        }
+        
+        const profileImg = document.querySelector('.profile-img');
+        const allBlocks = document.querySelectorAll('.cv-block');
+        const pictureBlock = document.getElementById('pictureBlock');
+        
+        // Handle picture block with sliding window animation
+        const pictureRect = pictureBlock.getBoundingClientRect();
+        const newImgSrc = isDarkTheme ? 'your-profile-picture-2.jpg' : 'your-profile-picture.jpg';
+        
+        // Create sliding window container that overlays the original
+        const slideContainer = document.createElement('div');
+        slideContainer.style.cssText = `
+            position: fixed;
+            top: ${pictureRect.top}px;
+            left: ${pictureRect.left}px;
+            width: ${pictureRect.width}px;
+            height: ${pictureRect.height}px;
+            border-radius: 15px;
+            overflow: hidden;
+            z-index: 1001;
+            background: transparent;
+        `;
+        
+        // Create current image (slides out) - show what's currently visible
+        const currentImg = document.createElement('img');
+        currentImg.src = profileImg.src;
+        currentImg.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        `;
+        
+        // Create new image (slides in)
+        const newImg = document.createElement('img');
+        newImg.src = newImgSrc;
+        newImg.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 100%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        `;
+        
+        slideContainer.appendChild(currentImg);
+        slideContainer.appendChild(newImg);
+        
+        // Show sliding container (original stays visible underneath)
+        document.body.appendChild(slideContainer);
+        
+        // Start sliding animation
+        setTimeout(() => {
+            currentImg.style.transform = 'translateX(-100%)';
+            newImg.style.transform = 'translateX(-100%)';
+        }, 50);
+        
+        // Update original image during slide animation (when new image is visible)
+        setTimeout(() => {
+            profileImg.src = newImgSrc;
+        }, 400);
+        
+        // Fade out overlay to reveal updated original
+        setTimeout(() => {
+            slideContainer.style.transition = 'opacity 0.2s ease';
+            slideContainer.style.opacity = '0';
+            
+            // Remove overlay after fade completes
+            setTimeout(() => {
+                if (document.body.contains(slideContainer)) {
+                    document.body.removeChild(slideContainer);
+                }
+            }, 200);
+        }, 800);
+        
+        // Handle CV blocks flip animation
+        allBlocks.forEach((panel, index) => {
+            // Stagger the animations slightly for a wave effect
+            setTimeout(() => {
+                if (isDarkTheme) {
+                    panel.classList.add('flipping-to-dark');
+                } else {
+                    panel.classList.add('flipping-to-light');
+                }
+                
+                // Remove animation class after animation completes
+                setTimeout(() => {
+                    panel.classList.remove('flipping-to-dark', 'flipping-to-light');
+                }, 800);
+            }, index * 50);
+        });
+        
+        // Change theme and picture at the halfway point of the flip (when it's perpendicular)
+        setTimeout(() => {
+            if (isDarkTheme) {
+                body.classList.add('dark-theme');
+                profileImg.src = 'your-profile-picture-2.jpg';
+            } else {
+                body.classList.remove('dark-theme');
+                profileImg.src = 'your-profile-picture.jpg';
+            }
+        }, 400); // Halfway through the 800ms animation
+        
+        // Profile colors stay original - no special color change
+        
+        // Add a subtle bounce animation to the toggle button
+        themeToggle.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+            themeToggle.style.transform = '';
+        }, 150);
+    });
     
     // Start animation after page load
     setTimeout(() => {
@@ -41,19 +177,19 @@ document.addEventListener('DOMContentLoaded', function() {
             pictureBlock.style.top = rect.top + 'px';
             pictureBlock.style.left = rect.left + 'px';
             pictureBlock.style.transform = 'translate(0, 0) scale(0.85)';
-        }, 500);
+        }, 300);
         
         // Step 3: Snap into grid and resize to fit
         setTimeout(() => {
             // Keep the transform origin at top-left for smooth growth
             pictureBlock.style.transformOrigin = 'top left';
             pictureBlock.classList.add('moved');
-        }, 2000);
+        }, 1200);
         
         // Step 4: As picture snaps into place, animate blocks emerging from behind
         setTimeout(() => {
             animateBlocksFromBehind();
-        }, 2800);
+        }, 2000);
     }
     
     function animateBlocksFromBehind() {
@@ -143,10 +279,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         if (block.id === 'educationBlock') {
-            // Smooth sequential flow
-            const educationItems = block.querySelectorAll('.education-item');
+            // Smooth sequential flow for both education and experience items
+            const educationItems = block.querySelectorAll('.modern-edu');
+            const experienceItems = block.querySelectorAll('.modern-exp');
+            
+            // Animate education items first
             educationItems.forEach((item, index) => {
                 item.style.transitionDelay = `${200 + (index * 200)}ms`;
+            });
+            
+            // Then animate experience items with staggered timing
+            experienceItems.forEach((item, index) => {
+                item.style.transitionDelay = `${200 + (index * 150)}ms`;
             });
         }
         
@@ -174,6 +318,25 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         addFloatingEffect();
     }, 3000);
+    
+    // Show theme toggle button after all animations complete
+    setTimeout(() => {
+        themeToggle.classList.add('visible');
+    }, 4000);
+    
+    // Start spinning icon animation after it appears
+    setTimeout(() => {
+        const spinningIcon = document.querySelector('.spinning-icon');
+        if (spinningIcon) {
+            // Start with fast spin
+            spinningIcon.classList.add('startup-spin');
+            setTimeout(() => {
+                // Transition to normal continuous spinning
+                spinningIcon.classList.remove('startup-spin');
+                spinningIcon.classList.add('started');
+            }, 1500);
+        }
+    }, 5000);
     
     function addFloatingEffect() {
         cvBlocks.forEach((block, index) => {

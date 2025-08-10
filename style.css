@@ -9,6 +9,182 @@ body {
   background: #131112;
   min-height: 100vh;
   overflow: hidden;
+  transition: background-color 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  position: fixed;
+  top: 35px;
+  right: 35px;
+  width: 50px;
+  height: 50px;
+  background: rgba(212, 199, 180, 0.9);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+}
+
+.theme-toggle.visible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: -6px;
+  width: 14px;
+  height: 14px;
+  background: rgba(212, 199, 180, 0.95);
+  border: 1px solid rgba(19, 17, 18, 0.1);
+  border-radius: 50%;
+  animation: subtlePulse 3s ease-in-out infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toggle.visible::after {
+  opacity: 1;
+  animation-delay: 2s;
+}
+
+@keyframes subtlePulse {
+  0%, 70%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  35% {
+    transform: scale(1.3);
+    opacity: 0.3;
+  }
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+.theme-toggle svg {
+  width: 24px;
+  height: 24px;
+  color: #131112;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Dark theme styles */
+body.dark-theme {
+  background: #4C372F;
+}
+
+body.dark-theme .theme-toggle {
+  background: rgba(170, 151, 122, 0.9);
+}
+
+body.dark-theme .theme-toggle::after {
+  background: rgba(170, 151, 122, 0.95);
+  border-color: rgba(76, 55, 47, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+body.dark-theme .theme-toggle svg {
+  color: #4C372F;
+}
+
+/* Spinning Icon */
+.spinning-icon {
+  position: fixed;
+  top: 63px;
+  left: 50px;
+  width: 70px;
+  height: 70px;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: spinningIconEntrance 1s ease-out 5s forwards;
+}
+
+.spinning-icon svg {
+  width: 70px;
+  height: 70px;
+  color: #4c4c44;
+  transform-origin: center;
+}
+
+/* After initial animation, keep spinning continuously */
+.spinning-icon.started svg {
+  animation: continuousSpin 6s linear infinite !important;
+}
+
+@keyframes continuousSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fastSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(540deg);
+  }
+}
+
+@keyframes startupSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(540deg);
+  }
+}
+
+@keyframes spinningIconEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(-180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Dark theme styles for spinning icon */
+body.dark-theme .spinning-icon svg {
+  color: #4C372F;
+}
+
+/* Fast spin classes for theme changes */
+.spinning-icon.theme-change-spin svg {
+  animation: fastSpin 1.5s ease-out !important;
+}
+
+/* Initial startup spin - same as theme change */
+.spinning-icon.startup-spin svg {
+  animation: fastSpin 1.5s ease-out !important;
 }
 
 .container {
@@ -16,7 +192,7 @@ body {
   height: 100vh;
   position: relative;
   display: grid;
-  grid-template-columns: 2fr 1.5fr 2.2fr 3.3fr;
+  grid-template-columns: 2fr 1.5fr 2.8fr 2.7fr;
   grid-template-rows: auto 1.8fr 1.8fr 1.5fr;
   gap: 25px;
   padding: 25px;
@@ -49,7 +225,7 @@ body {
 .profile-img {
   width: 270px;
   height: 360px;
-  border-radius: 15px;
+  border-radius: 25px;
   object-fit: cover;
 }
 
@@ -103,8 +279,9 @@ body {
   padding: 0 !important;
   display: block !important;
   overflow: hidden !important;
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
 }
+
 
 .picture-block.moved .profile-img {
   width: 100% !important;
@@ -195,7 +372,7 @@ body {
   font-weight: 500;
   background: rgba(19, 17, 18, 0.1);
   padding: 4px 10px;
-  border-radius: 15px;
+  border-radius: 25px;
   font-size: 0.9em;
   border: 1px solid rgba(19, 17, 18, 0.2);
   transition: all 0.3s ease;
@@ -221,12 +398,12 @@ body {
 /* Ensure blocks fill their grid areas completely */
 .cv-block {
   background: #d4c7b4;
-  border-radius: 15px;
+  border-radius: 25px;
   padding: 20px;
   color: #131112;
   opacity: 0;
   transform: scale(0);
-  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   width: 100%;
   height: 100%;
@@ -394,7 +571,7 @@ body {
 }
 
 #headerBlock h2 {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 800;
   font-size: 2.8em;
   margin-bottom: 10px;
@@ -413,6 +590,210 @@ body {
 #profileBlock {
   background: #4c4c44;
   color: #d4c7b4;
+}
+
+/* Dark theme CV blocks */
+body.dark-theme .cv-block {
+  background: #171612;
+  color: #AA977A;
+}
+
+body.dark-theme #headerBlock,
+body.dark-theme #profileBlock {
+  background: #AA977A;
+  color: #171612;
+}
+
+/* Dark theme heading colors */
+body.dark-theme .cv-block h3 {
+  color: #AA977A;
+}
+
+body.dark-theme .cv-block h4 {
+  color: #AA977A;
+}
+
+body.dark-theme #headerBlock h2,
+body.dark-theme #headerBlock p {
+  color: #4C372F;
+}
+
+/* Profile - original colors - no changes */
+body.dark-theme #profileBlock h3,
+body.dark-theme #profileBlock h4,
+body.dark-theme #profileBlock p {
+  color: #171612;
+}
+
+/* Skills - all content same color as heading */
+#skillsBlock .skills-section,
+#skillsBlock .skills-section h4,
+#skillsBlock .skill-tag {
+  color: #131112;
+}
+
+#skillsBlock .skill-tag {
+  border-color: #131112;
+}
+
+body.dark-theme #skillsBlock .skills-section,
+body.dark-theme #skillsBlock .skills-section h4,
+body.dark-theme #skillsBlock .skill-tag {
+  color: #AA977A;
+}
+
+body.dark-theme #skillsBlock .skill-tag {
+  border-color: #AA977A;
+}
+
+/* Contact - all content same color as heading */
+#contactBlock h3,
+#contactBlock .contact-info-item .contact-label,
+#contactBlock .contact-info-item .contact-value,
+#contactBlock .contact-action span,
+#contactBlock .contact-action svg {
+  color: #131112;
+}
+
+#contactBlock .contact-action {
+  border-color: #131112;
+}
+
+body.dark-theme #contactBlock h3,
+body.dark-theme #contactBlock .contact-info-item .contact-label,
+body.dark-theme #contactBlock .contact-info-item .contact-value,
+body.dark-theme #contactBlock .contact-action span,
+body.dark-theme #contactBlock .contact-action svg {
+  color: #AA977A;
+}
+
+body.dark-theme #contactBlock .contact-action {
+  border-color: #AA977A;
+}
+
+/* Dark Theme - Modern Education Styles */
+
+/* Dark Theme - Modern Experience Items */
+body.dark-theme .modern-exp {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+body.dark-theme .modern-exp::before {
+  display: none;
+}
+
+body.dark-theme .modern-exp:hover {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+body.dark-theme .modern-exp:hover::before {
+  display: none;
+}
+
+body.dark-theme .exp-year {
+  color: rgba(170, 151, 122, 0.8);
+  background: rgba(170, 151, 122, 0.1);
+  border-color: rgba(170, 151, 122, 0.15);
+}
+
+body.dark-theme .modern-exp .institution {
+  color: rgba(170, 151, 122, 0.9);
+}
+
+
+body.dark-theme .exp-content strong {
+  color: #AA977A;
+}
+
+body.dark-theme .exp-content strong::after {
+  background: linear-gradient(90deg, rgba(170, 151, 122, 0.3) 0%, transparent 100%);
+}
+
+body.dark-theme .exp-content li::before {
+  color: rgba(170, 151, 122, 0.7);
+}
+
+/* Dark Theme - Modern Project Items */
+body.dark-theme .project-item {
+  background: transparent;
+  border-bottom-color: rgba(170, 151, 122, 0.3);
+}
+
+body.dark-theme .project-item:hover {
+  background: rgba(170, 151, 122, 0.03);
+  border-bottom-color: rgba(170, 151, 122, 0.4);
+}
+
+/* Experience Block Text Animations */
+#educationBlock h3 {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#educationBlock .modern-exp {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Animated state - experience content moves to final position */
+#educationBlock.text-animated h3 {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#educationBlock.text-animated .modern-exp {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* Flip Animation - Vertical */
+@keyframes flipToBack {
+  0% {
+    transform: rotateX(0deg) scale(1);
+  }
+  50% {
+    transform: rotateX(90deg) scale(0.95);
+  }
+  100% {
+    transform: rotateX(0deg) scale(1);
+  }
+}
+
+@keyframes flipToFront {
+  0% {
+    transform: rotateX(0deg) scale(1);
+  }
+  50% {
+    transform: rotateX(-90deg) scale(0.95);
+  }
+  100% {
+    transform: rotateX(0deg) scale(1);
+  }
+}
+
+.cv-block.flipping-to-dark {
+  animation: flipToBack 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  transform-style: preserve-3d !important;
+  transition: none !important;
+}
+
+.cv-block.flipping-to-light {
+  animation: flipToFront 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  transform-style: preserve-3d !important;
+  transition: none !important;
+}
+
+
+/* Picture flip animation - handled by picture-block flip */
+.profile-img {
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 #profileBlock h3 {
@@ -565,9 +946,136 @@ body {
   text-transform: uppercase;
 }
 
-.education-item,
-.experience-item,
+
+/* Modern Experience Items - Seamless with panel */
+.modern-exp {
+  margin-bottom: 16px;
+  padding: 16px;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+.modern-exp::before {
+  display: none;
+}
+
+.modern-exp:hover {
+  background: transparent;
+  transform: none;
+  box-shadow: none;
+}
+
+.modern-exp:hover::before {
+  display: none;
+}
+
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.exp-header h4 {
+  margin: 0;
+  flex: 1;
+}
+
+.exp-year {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 500;
+  color: rgba(19, 17, 18, 0.6);
+  font-size: 0.8em;
+  margin-left: 10px;
+  white-space: nowrap;
+  background: rgba(19, 17, 18, 0.06);
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(19, 17, 18, 0.1);
+}
+
+.exp-details {
+  margin-bottom: 12px;
+  font-size: 0.95em;
+}
+
+.exp-content {
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+.exp-content p {
+  margin: 6px 0 10px 0;
+}
+
+.exp-content ul {
+  margin: 0;
+  padding-left: 18px;
+  list-style-type: none;
+}
+
+.exp-content li {
+  margin-bottom: 8px;
+  position: relative;
+  line-height: 1.6;
+  padding-left: 12px;
+}
+
+.exp-content li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: rgba(19, 17, 18, 0.6);
+  font-weight: bold;
+}
+
+.exp-content strong {
+  color: #131112;
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+}
+
+.exp-content strong::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(19, 17, 18, 0.2) 0%, transparent 100%);
+  border-radius: 1px;
+}
+
+
+/* Modern Project Items - Blend with separators */
 .project-item {
+  margin-bottom: 0;
+  padding: 16px 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(19, 17, 18, 0.2);
+  transition: all 0.3s ease;
+}
+
+.project-item:last-child {
+  border-bottom: none;
+}
+
+.project-item:hover {
+  background: rgba(19, 17, 18, 0.02);
+  border-bottom-color: rgba(19, 17, 18, 0.3);
+}
+
+/* Legacy education/experience items */
+.education-item:not(.modern-edu),
+.experience-item:not(.modern-exp) {
   margin-bottom: 15px;
   padding: 10px;
   background: rgba(19, 17, 18, 0.05);
@@ -592,6 +1100,7 @@ body {
   margin-bottom: 3px;
   letter-spacing: -0.005em;
 }
+
 
 .language-item p {
   display: inline-block;
