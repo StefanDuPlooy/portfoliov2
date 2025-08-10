@@ -192,7 +192,7 @@ body.dark-theme .spinning-icon svg {
   height: 100vh;
   position: relative;
   display: grid;
-  grid-template-columns: 2fr 1.5fr 2.8fr 2.7fr;
+  grid-template-columns: 2fr 1.5fr 2.7fr 2.8fr;
   grid-template-rows: auto 1.8fr 1.8fr 1.5fr;
   gap: 25px;
   padding: 25px;
@@ -249,15 +249,15 @@ body.dark-theme .spinning-icon svg {
 }
 
 #educationBlock {
-  grid-area: education;
+  grid-area: experience;
 }
 
 #skillsBlock {
-  grid-area: skills;
+  grid-area: education;
 }
 
 #experienceBlock {
-  grid-area: experience;
+  grid-area: skills;
 }
 
 #projectsBlock {
@@ -728,6 +728,51 @@ body.dark-theme .project-item:hover {
   border-bottom-color: rgba(170, 151, 122, 0.4);
 }
 
+/* Dark theme experience items */
+body.dark-theme .experience-item {
+  background: transparent;
+  border-bottom-color: rgba(170, 151, 122, 0.3);
+}
+
+body.dark-theme .experience-item:hover {
+  background: rgba(170, 151, 122, 0.03);
+  border-bottom-color: rgba(170, 151, 122, 0.4);
+}
+
+body.dark-theme .experience-item .exp-header h4 {
+  color: #AA977A;
+}
+
+body.dark-theme .experience-item .exp-year {
+  background: rgba(170, 151, 122, 0.85);
+  color: #131112;
+  opacity: 0.8;
+}
+
+body.dark-theme .experience-item .institution {
+  color: rgba(170, 151, 122, 0.8);
+  opacity: 0.8;
+}
+
+body.dark-theme .experience-item .exp-content p {
+  color: #AA977A;
+  opacity: 0.9;
+}
+
+body.dark-theme .experience-item .exp-content strong {
+  color: #AA977A;
+  opacity: 0.9;
+}
+
+body.dark-theme .experience-item .exp-content li {
+  color: #AA977A;
+  opacity: 0.9;
+}
+
+body.dark-theme .experience-item .exp-content li::before {
+  color: rgba(170, 151, 122, 0.4);
+}
+
 /* Experience Block Text Animations */
 #educationBlock h3 {
   opacity: 0;
@@ -1073,14 +1118,133 @@ body.dark-theme .project-item:hover {
   border-bottom-color: rgba(19, 17, 18, 0.3);
 }
 
-/* Legacy education/experience items */
-.education-item:not(.modern-edu),
-.experience-item:not(.modern-exp) {
+/* Legacy education items */
+.education-item:not(.modern-edu) {
   margin-bottom: 15px;
   padding: 10px;
   background: rgba(19, 17, 18, 0.05);
   border-radius: 8px;
   border-left: 3px solid rgba(19, 17, 18, 0.2);
+}
+
+/* Experience items use project styling with original structure */
+.experience-item {
+  margin-bottom: 0;
+  padding: 16px 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(19, 17, 18, 0.2);
+  transition: all 0.3s ease;
+}
+
+.experience-item:last-child {
+  border-bottom: none;
+}
+
+.experience-item:hover {
+  background: rgba(19, 17, 18, 0.02);
+  border-bottom-color: rgba(19, 17, 18, 0.3);
+}
+
+/* Experience item internal structure - matching project font sizes */
+.experience-item .exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.experience-item .exp-header h4 {
+  margin: 0;
+  flex: 1;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 1.4em;
+  color: #131112;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.experience-item .exp-year {
+  background: rgba(76, 76, 68, 0.9);
+  color: #d4c7b4;
+  padding: 3px 10px;
+  border-radius: 3px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 1.05em;
+  opacity: 0.8;
+  font-style: italic;
+  letter-spacing: -0.005em;
+  margin-left: 16px;
+}
+
+.experience-item .exp-details {
+  margin-bottom: 10px;
+}
+
+.experience-item .institution {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 1.05em;
+  opacity: 0.8;
+  font-style: italic;
+  letter-spacing: -0.005em;
+  color: rgba(19, 17, 18, 0.8);
+}
+
+.experience-item .exp-content {
+  line-height: 1.6;
+}
+
+.experience-item .exp-content p {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 1.1em;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin-bottom: 10px;
+  letter-spacing: -0.005em;
+  color: #131112;
+}
+
+.experience-item .exp-content strong {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 1.1em;
+  line-height: 1.6;
+  opacity: 0.9;
+  letter-spacing: -0.005em;
+  color: #131112;
+}
+
+.experience-item .exp-content ul {
+  margin: 4px 0 0 0;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.experience-item .exp-content li {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 1.1em;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin-bottom: 10px;
+  letter-spacing: -0.005em;
+  padding-left: 15px;
+  position: relative;
+  color: #131112;
+}
+
+.experience-item .exp-content li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: rgba(19, 17, 18, 0.4);
+  font-size: 1.1em;
+  top: 0;
 }
 
 .education-item ul,
