@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const pictureBlock = document.getElementById('pictureBlock');
     const cvBlocks = document.querySelectorAll('.cv-block');
     const themeToggle = document.getElementById('themeToggle');
+    const topInstruction = document.getElementById('topInstruction');
+    const bottomNotice = document.getElementById('bottomNotice');
     const body = document.body;
     
     // Animation sequence controller
@@ -10,7 +12,39 @@ document.addEventListener('DOMContentLoaded', function() {
     // Theme toggle functionality
     let isDarkTheme = false;
     
-    themeToggle.addEventListener('click', function() {
+    // Enhanced responsive detection for dynamic grid
+    function getScreenSize() {
+        const width = window.innerWidth;
+        if (width >= 1400) return 'xl';
+        if (width >= 1200) return 'lg';
+        if (width >= 1024) return 'md';
+        if (width >= 768) return 'sm';
+        if (width >= 640) return 'tablet';
+        if (width >= 480) return 'mobile';
+        return 'xs';
+    }
+    
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+    
+    function isSmallMobile() {
+        return window.innerWidth <= 479;
+    }
+    
+    function isTablet() {
+        return window.innerWidth > 640 && window.innerWidth <= 767;
+    }
+    
+    function isMediumScreen() {
+        return window.innerWidth > 1023 && window.innerWidth <= 1199;
+    }
+    
+    // Touch device detection
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // Theme toggle with improved touch support
+    function handleThemeToggle() {
         isDarkTheme = !isDarkTheme;
         
         // Trigger fast spin on spinning icon
@@ -139,19 +173,35 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             themeToggle.style.transform = '';
         }, 150);
-    });
+    }
     
-    // Start animation after page load
-    setTimeout(() => {
-        if (!animationStarted) {
-            startAnimation();
-        }
-    }, 2000);
+    // Add event listeners for theme toggle with touch support
+    if (isTouchDevice) {
+        themeToggle.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            handleThemeToggle();
+        }, { passive: false });
+    } else {
+        themeToggle.addEventListener('click', handleThemeToggle);
+    }
     
-    // Also start animation on picture click for immediate interaction
+    // Start animation only on picture click
     pictureBlock.addEventListener('click', function() {
         if (!animationStarted) {
-            startAnimation();
+            // Fade out both instruction texts first
+            topInstruction.style.opacity = '0';
+            bottomNotice.style.opacity = '0';
+            
+            // Smoothly scroll to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            
+            // Wait for text to fade, then start animation
+            setTimeout(() => {
+                startAnimation();
+            }, 400); // Match the CSS transition duration
         }
     });
     
@@ -168,28 +218,84 @@ document.addEventListener('DOMContentLoaded', function() {
         const rect = pictureGridArea.getBoundingClientRect();
         document.querySelector('.container').removeChild(pictureGridArea);
         
+        // Responsive animation timing and scaling based on screen size
+        const screenSize = getScreenSize();
+        let shrinkScale, moveDelay, snapDelay;
+        
+        switch(screenSize) {
+            case 'xs':
+                shrinkScale = 0.95;
+                moveDelay = 150;
+                snapDelay = 600;
+                break;
+            case 'mobile':
+                shrinkScale = 0.9;
+                moveDelay = 200;
+                snapDelay = 700;
+                break;
+            case 'tablet':
+                shrinkScale = 0.87;
+                moveDelay = 250;
+                snapDelay = 900;
+                break;
+            case 'sm':
+                shrinkScale = 0.85;
+                moveDelay = 300;
+                snapDelay = 1000;
+                break;
+            case 'md':
+                shrinkScale = 0.83;
+                moveDelay = 350;
+                snapDelay = 1100;
+                break;
+            default: // lg, xl
+                shrinkScale = 0.85;
+                moveDelay = 300;
+                snapDelay = 1200;
+        }
+        
         // Step 1: Shrink the picture slightly
-        pictureBlock.style.transform = 'translate(-50%, -50%) scale(0.85)';
+        pictureBlock.style.transform = `translate(-50%, -50%) scale(${shrinkScale})`;
         
         // Step 2: Move to calculated grid position while maintaining size
         setTimeout(() => {
             // Move to top-left corner of grid area to align with final position
             pictureBlock.style.top = rect.top + 'px';
             pictureBlock.style.left = rect.left + 'px';
-            pictureBlock.style.transform = 'translate(0, 0) scale(0.85)';
-        }, 300);
+            pictureBlock.style.transform = `translate(0, 0) scale(${shrinkScale})`;
+        }, moveDelay);
         
         // Step 3: Snap into grid and resize to fit
         setTimeout(() => {
             // Keep the transform origin at top-left for smooth growth
             pictureBlock.style.transformOrigin = 'top left';
             pictureBlock.classList.add('moved');
-        }, 1200);
+        }, snapDelay);
         
         // Step 4: As picture snaps into place, animate blocks emerging from behind
+        let blocksDelay;
+        switch(screenSize) {
+            case 'xs':
+                blocksDelay = 1200;
+                break;
+            case 'mobile':
+                blocksDelay = 1400;
+                break;
+            case 'tablet':
+                blocksDelay = 1600;
+                break;
+            case 'sm':
+                blocksDelay = 1700;
+                break;
+            case 'md':
+                blocksDelay = 1800;
+                break;
+            default: // lg, xl
+                blocksDelay = 2000;
+        }
         setTimeout(() => {
             animateBlocksFromBehind();
-        }, 2000);
+        }, blocksDelay);
     }
     
     function animateBlocksFromBehind() {
@@ -214,22 +320,93 @@ document.addEventListener('DOMContentLoaded', function() {
                 backgroundColor = '#4C4C44';
             }
             
+            // Responsive initial size and animation duration based on screen size
+            const screenSize = getScreenSize();
+            let initialWidth, initialHeight, animationDuration, borderRadius;
+            
+            switch(screenSize) {
+                case 'xs':
+                    initialWidth = 50;
+                    initialHeight = 35;
+                    animationDuration = 0.3;
+                    borderRadius = 8;
+                    break;
+                case 'mobile':
+                    initialWidth = 60;
+                    initialHeight = 40;
+                    animationDuration = 0.4;
+                    borderRadius = 10;
+                    break;
+                case 'tablet':
+                    initialWidth = 70;
+                    initialHeight = 50;
+                    animationDuration = 0.5;
+                    borderRadius = 12;
+                    break;
+                case 'sm':
+                    initialWidth = 80;
+                    initialHeight = 60;
+                    animationDuration = 0.6;
+                    borderRadius = 15;
+                    break;
+                default: // md, lg, xl
+                    initialWidth = 80;
+                    initialHeight = 60;
+                    animationDuration = 0.6;
+                    borderRadius = 15;
+            }
+            
             // Set initial styles (start from picture center, small size)
             animatedBlock.style.cssText = `
                 position: fixed;
                 top: ${pictureCenterY}px;
                 left: ${pictureCenterX}px;
-                width: 80px;
-                height: 60px;
+                width: ${initialWidth}px;
+                height: ${initialHeight}px;
                 background: ${backgroundColor};
-                border-radius: 15px;
+                border-radius: ${borderRadius}px;
                 transform: translate(-50%, -50%) scale(0.3);
-                transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                transition: all ${animationDuration}s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                 z-index: 50;
                 box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             `;
             
             document.body.appendChild(animatedBlock);
+            
+            // Responsive stagger delay based on screen size
+            let staggerDelay, animationTime, textDelay;
+            
+            switch(screenSize) {
+                case 'xs':
+                    staggerDelay = 40;
+                    animationTime = 300;
+                    textDelay = 150;
+                    break;
+                case 'mobile':
+                    staggerDelay = 60;
+                    animationTime = 400;
+                    textDelay = 200;
+                    break;
+                case 'tablet':
+                    staggerDelay = 70;
+                    animationTime = 450;
+                    textDelay = 220;
+                    break;
+                case 'sm':
+                    staggerDelay = 80;
+                    animationTime = 500;
+                    textDelay = 250;
+                    break;
+                case 'md':
+                    staggerDelay = 90;
+                    animationTime = 540;
+                    textDelay = 280;
+                    break;
+                default: // lg, xl
+                    staggerDelay = 100;
+                    animationTime = 580;
+                    textDelay = 300;
+            }
             
             // Animate to final position with delay
             setTimeout(() => {
@@ -259,9 +436,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Animate text content after block is fully visible
                     setTimeout(() => {
                         animateBlockText(block, index);
-                    }, 300);
-                }, 580);
-            }, index * 100);
+                    }, textDelay);
+                }, animationTime);
+            }, index * staggerDelay);
         });
     }
     
@@ -279,17 +456,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         if (block.id === 'educationBlock') {
-            // Smooth sequential flow for both education and experience items
-            const educationItems = block.querySelectorAll('.modern-edu');
-            const experienceItems = block.querySelectorAll('.modern-exp');
+            // Smooth sequential flow for education items
+            const educationItems = block.querySelectorAll('.education-item');
             
-            // Animate education items first
+            // Animate education items with staggered timing
             educationItems.forEach((item, index) => {
-                item.style.transitionDelay = `${200 + (index * 200)}ms`;
-            });
-            
-            // Then animate experience items with staggered timing
-            experienceItems.forEach((item, index) => {
                 item.style.transitionDelay = `${200 + (index * 150)}ms`;
             });
         }
@@ -303,15 +474,52 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Add hover effects and interactions
+    // Add hover effects and touch interactions
     cvBlocks.forEach(block => {
-        block.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.05)';
-        });
-        
-        block.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1)';
-        });
+        if (isTouchDevice) {
+            // Touch device interactions
+            let touchStartTime;
+            let touchMoved = false;
+            
+            block.addEventListener('touchstart', function(e) {
+                touchStartTime = Date.now();
+                touchMoved = false;
+                this.style.transform = 'scale(1.02)';
+                this.style.transition = 'transform 0.1s ease';
+            }, { passive: true });
+            
+            block.addEventListener('touchmove', function() {
+                touchMoved = true;
+                this.style.transform = 'scale(1)';
+            }, { passive: true });
+            
+            block.addEventListener('touchend', function() {
+                const touchDuration = Date.now() - touchStartTime;
+                
+                if (!touchMoved && touchDuration < 300) {
+                    // Quick tap - add a subtle feedback
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 100);
+                } else {
+                    this.style.transform = 'scale(1)';
+                }
+                
+                this.style.transition = 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            }, { passive: true });
+        } else {
+            // Mouse interactions for non-touch devices
+            block.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+                this.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            });
+            
+            block.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.transition = 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            });
+        }
     });
     
     // Add subtle floating animation after everything is loaded
@@ -362,4 +570,33 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
+
+    // Handle window resize for responsive layout adjustments
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            // Only handle resize if animation has started
+            if (animationStarted && pictureBlock.classList.contains('moved')) {
+                // Recalculate grid positioning for moved picture
+                const pictureGridArea = document.createElement('div');
+                pictureGridArea.style.gridArea = 'picture';
+                pictureGridArea.style.visibility = 'hidden';
+                document.querySelector('.container').appendChild(pictureGridArea);
+                
+                const rect = pictureGridArea.getBoundingClientRect();
+                document.querySelector('.container').removeChild(pictureGridArea);
+                
+                // Smoothly adjust picture position
+                pictureBlock.style.transition = 'all 0.3s ease';
+                pictureBlock.style.top = rect.top + 'px';
+                pictureBlock.style.left = rect.left + 'px';
+                
+                // Reset transition after adjustment
+                setTimeout(() => {
+                    pictureBlock.style.transition = '';
+                }, 300);
+            }
+        }, 250); // Debounce resize events
+    });
 });
