@@ -29,8 +29,8 @@ body::-webkit-scrollbar {
   position: absolute;
   top: 12px;
   right: 15px;
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
   background: rgba(255, 255, 255, 0.2) !important;
   border: 1px solid rgba(76, 76, 68, 0.3) !important;
   border-radius: 50%;
@@ -97,8 +97,8 @@ body::-webkit-scrollbar {
 }
 
 .theme-toggle svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   color: #4c4c44 !important;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -142,7 +142,7 @@ body.dark-theme .spinning-icon.started {
 /* Spinning Icon */
 .spinning-icon {
   position: absolute;
-  top: 30%;
+  top: 25%;
   left: 25px;
   transform: translateY(-50%);
   width: 70px;
@@ -235,8 +235,8 @@ body.dark-theme .spinning-icon svg {
   display: grid;
   grid-template-columns: 2fr 1fr 2.7fr 2.8fr;
   grid-template-rows: auto 0.25fr 0.25fr 0.35fr;
-  gap: 18px;
-  padding: 18px;
+  gap: 24px;
+  padding: 24px;
   grid-template-areas:
     "header header header header"
     "profile picture education skills"
@@ -824,6 +824,43 @@ body.dark-theme .project-item:hover {
   border-bottom-color: rgba(170, 151, 122, 0.4);
 }
 
+/* Dark theme education items */
+body.dark-theme .education-item {
+  background: transparent;
+  border-bottom-color: rgba(170, 151, 122, 0.3);
+}
+
+body.dark-theme .education-item:hover {
+  background: rgba(170, 151, 122, 0.03);
+  border-bottom-color: rgba(170, 151, 122, 0.4);
+}
+
+body.dark-theme .education-item .edu-header h4 {
+  color: #AA977A;
+}
+
+body.dark-theme .education-item .edu-year {
+  background: rgba(170, 151, 122, 0.85);
+  color: #131112;
+  opacity: 0.8;
+}
+
+body.dark-theme .education-item .institution {
+  color: rgba(170, 151, 122, 0.8);
+  opacity: 0.8;
+}
+
+body.dark-theme .education-item .edu-content p {
+  color: #AA977A;
+  opacity: 0.9;
+}
+
+body.dark-theme .education-item .edu-content strong {
+  color: #AA977A;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
 /* Dark theme experience items */
 body.dark-theme .experience-item {
   background: transparent;
@@ -858,6 +895,7 @@ body.dark-theme .experience-item .exp-content p {
 body.dark-theme .experience-item .exp-content strong {
   color: #AA977A;
   opacity: 0.9;
+  font-weight: 600;
 }
 
 body.dark-theme .experience-item .exp-content li {
@@ -869,26 +907,26 @@ body.dark-theme .experience-item .exp-content li::before {
   color: rgba(170, 151, 122, 0.4);
 }
 
-/* Experience Block Text Animations */
+/* Education Block Text Animations */
 #educationBlock h3 {
   opacity: 0;
   transform: translateY(40px);
   transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-#educationBlock .modern-exp {
+#educationBlock .education-item {
   opacity: 0;
   transform: translateY(40px);
   transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Animated state - experience content moves to final position */
+/* Animated state - education content moves to final position */
 #educationBlock.text-animated h3 {
   opacity: 1;
   transform: translateY(0);
 }
 
-#educationBlock.text-animated .modern-exp {
+#educationBlock.text-animated .education-item {
   opacity: 1;
   transform: translateY(0);
 }
@@ -1214,13 +1252,96 @@ body.dark-theme .experience-item .exp-content li::before {
   border-bottom-color: rgba(19, 17, 18, 0.3);
 }
 
-/* Legacy education items */
-.education-item:not(.modern-edu) {
-  margin-bottom: 15px;
-  padding: 10px;
-  background: rgba(19, 17, 18, 0.05);
-  border-radius: 8px;
-  border-left: 3px solid rgba(19, 17, 18, 0.2);
+/* Modern Education Items - matching experience styling */
+.education-item {
+  margin-bottom: 0;
+  padding: 16px 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(19, 17, 18, 0.2);
+  transition: all 0.3s ease;
+}
+
+.education-item:last-child {
+  border-bottom: none;
+}
+
+.education-item:hover {
+  background: rgba(19, 17, 18, 0.02);
+  border-bottom-color: rgba(19, 17, 18, 0.3);
+}
+
+/* Education item internal structure - matching experience layout */
+.education-item .edu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.education-item .edu-header h4 {
+  margin: 0;
+  flex: 1;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 1.4em;
+  color: #131112;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.education-item .edu-year {
+  background: rgba(76, 76, 68, 0.9);
+  color: #d4c7b4;
+  padding: 3px 10px;
+  border-radius: 3px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 1.05em;
+  opacity: 0.8;
+  font-style: italic;
+  letter-spacing: -0.005em;
+  margin-left: 16px;
+}
+
+.education-item .edu-details {
+  margin-bottom: 10px;
+}
+
+.education-item .institution {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 1.05em;
+  opacity: 0.8;
+  font-style: italic;
+  letter-spacing: -0.005em;
+  color: rgba(19, 17, 18, 0.8);
+}
+
+.education-item .edu-content {
+  line-height: 1.6;
+}
+
+.education-item .edu-content p {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 1.1em;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin-bottom: 10px;
+  letter-spacing: -0.005em;
+  color: #131112;
+}
+
+.education-item .edu-content strong {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 1.1em;
+  line-height: 1.6;
+  opacity: 0.9;
+  letter-spacing: -0.005em;
+  color: #131112;
 }
 
 /* Experience items use project styling with original structure */
@@ -1307,12 +1428,16 @@ body.dark-theme .experience-item .exp-content li::before {
 
 .experience-item .exp-content strong {
   font-family: "Inter", sans-serif;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 1.1em;
   line-height: 1.6;
   opacity: 0.9;
   letter-spacing: -0.005em;
   color: #131112;
+}
+
+.experience-item .exp-content p {
+  margin-bottom: 0px;
 }
 
 .experience-item .exp-content ul {
@@ -1381,45 +1506,224 @@ body.dark-theme .experience-item .exp-content li::before {
   margin-bottom: 8px;
 }
 
-/* Responsive design */
-@media (max-width: 1200px) {
-  .container {
-    grid-template-columns: 1.8fr 2.2fr 1.3fr 2.8fr 2fr;
-    grid-template-rows: auto 1.8fr 1.8fr 1.3fr;
-  }
+/* Progressive Responsive Design - Dynamic Grid Stacking */
 
-  .picture-block.moved .profile-img {
-    width: 180px !important;
-    height: 240px !important;
+/* Large screens - 4 columns (original layout) */
+@media (min-width: 1400px) {
+  .container {
+    grid-template-columns: 2fr 1fr 2.7fr 2.8fr;
+    grid-template-rows: auto 0.25fr 0.25fr 0.35fr;
+    gap: 26px;
+    padding: 26px;
   }
 }
 
-@media (max-width: 768px) {
+/* Medium-large screens - slightly adjusted proportions */
+@media (max-width: 1400px) and (min-width: 1200px) {
+  .container {
+    grid-template-columns: 1.8fr 1.2fr 2.2fr 2.5fr;
+    grid-template-rows: auto 0.3fr 0.3fr 0.4fr;
+    gap: 22px;
+    padding: 22px;
+  }
+}
+
+/* Medium screens - 3 columns, start moving some panels down */
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .container {
+    grid-template-columns: 1.5fr 1fr 2.5fr;
+    grid-template-rows: auto auto 0.8fr 0.8fr 0.6fr;
+    grid-template-areas:
+      "header header header"
+      "profile picture education"
+      "contact picture education"  
+      "skills skills skills"
+      "experience experience projects";
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  #skillsBlock { grid-area: skills; }
+  #educationBlock { grid-area: education; }
+  #experienceBlock { grid-area: experience; }
+  #projectsBlock { grid-area: projects; }
+}
+
+/* Small-medium screens - 2 columns, more vertical stacking */
+@media (max-width: 1023px) and (min-width: 768px) {
   .container {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 2fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto auto;
     grid-template-areas:
       "header header"
-      "picture picture"
-      "contact profile"
+      "profile picture"
+      "contact picture"
       "education skills"
-      "experience projects";
-    gap: 10px;
-    padding: 10px;
+      "experience experience"
+      "projects projects";
+    gap: 18px;
+    padding: 18px;
   }
 
   .picture-block {
-    width: 300px;
-    height: 400px;
+    width: 280px;
+    height: 380px;
   }
 
   .picture-block .profile-img {
-    width: 250px;
-    height: 333px;
+    width: 240px;
+    height: 320px;
   }
 
   .picture-block.moved .profile-img {
-    width: 188px !important;
-    height: 250px !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+/* Tablet portrait - mostly stacked with some 2-column sections */
+@media (max-width: 767px) and (min-width: 640px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto auto auto;
+    grid-template-areas:
+      "header header"
+      "picture picture"
+      "profile profile"
+      "contact education"
+      "skills skills"
+      "experience experience"
+      "projects projects";
+    gap: 20px;
+    padding: 16px;
+  }
+
+  .picture-block {
+    width: 260px;
+    height: 350px;
+  }
+
+  .picture-block .profile-img {
+    width: 220px;
+    height: 295px;
+  }
+
+  .picture-block.moved .profile-img {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+/* Mobile landscape - single column with some strategic 2-column sections */
+@media (max-width: 639px) and (min-width: 480px) {
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto auto auto auto;
+    grid-template-areas:
+      "header"
+      "picture"
+      "profile"
+      "contact"
+      "education"
+      "skills"
+      "experience"
+      "projects";
+    gap: 18px;
+    padding: 14px;
+  }
+
+  .picture-block {
+    width: 240px;
+    height: 320px;
+  }
+
+  .picture-block .profile-img {
+    width: 200px;
+    height: 267px;
+  }
+
+  .picture-block.moved .profile-img {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .cv-block {
+    padding: 24px;
+  }
+}
+
+/* Small mobile - full single column */
+@media (max-width: 479px) {
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto auto auto auto;
+    grid-template-areas:
+      "header"
+      "picture"
+      "profile"
+      "contact"
+      "education"
+      "skills"
+      "experience"
+      "projects";
+    gap: 16px;
+    padding: 12px;
+  }
+
+  .picture-block {
+    width: 200px;
+    height: 280px;
+  }
+
+  .picture-block .profile-img {
+    width: 170px;
+    height: 240px;
+  }
+
+  .picture-block.moved .profile-img {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .cv-block {
+    padding: 20px;
+  }
+
+  /* Reduce font sizes for small screens */
+  .cv-block h2 {
+    font-size: 2em;
+  }
+
+  .cv-block h3 {
+    font-size: 1.5em;
+  }
+
+  .cv-block h4 {
+    font-size: 1.2em;
+  }
+
+  .cv-block p {
+    font-size: 1em;
+  }
+
+  /* Adjust contact grid for small screens */
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .contact-actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  /* Stack skills more compactly */
+  .skills-grid {
+    gap: 6px;
+  }
+
+  .skill-tag {
+    font-size: 0.8em;
+    padding: 3px 8px;
   }
 }

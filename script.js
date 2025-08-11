@@ -12,17 +12,32 @@ document.addEventListener('DOMContentLoaded', function() {
     // Theme toggle functionality
     let isDarkTheme = false;
     
-    // Responsive detection
+    // Enhanced responsive detection for dynamic grid
+    function getScreenSize() {
+        const width = window.innerWidth;
+        if (width >= 1400) return 'xl';
+        if (width >= 1200) return 'lg';
+        if (width >= 1024) return 'md';
+        if (width >= 768) return 'sm';
+        if (width >= 640) return 'tablet';
+        if (width >= 480) return 'mobile';
+        return 'xs';
+    }
+    
     function isMobile() {
         return window.innerWidth <= 768;
     }
     
     function isSmallMobile() {
-        return window.innerWidth <= 480;
+        return window.innerWidth <= 479;
     }
     
     function isTablet() {
-        return window.innerWidth > 768 && window.innerWidth <= 1024;
+        return window.innerWidth > 640 && window.innerWidth <= 767;
+    }
+    
+    function isMediumScreen() {
+        return window.innerWidth > 1023 && window.innerWidth <= 1199;
     }
     
     // Touch device detection
@@ -203,10 +218,41 @@ document.addEventListener('DOMContentLoaded', function() {
         const rect = pictureGridArea.getBoundingClientRect();
         document.querySelector('.container').removeChild(pictureGridArea);
         
-        // Responsive animation timing and scaling
-        const shrinkScale = isSmallMobile() ? 0.9 : 0.85;
-        const moveDelay = isMobile() ? 200 : 300;
-        const snapDelay = isMobile() ? 800 : 1200;
+        // Responsive animation timing and scaling based on screen size
+        const screenSize = getScreenSize();
+        let shrinkScale, moveDelay, snapDelay;
+        
+        switch(screenSize) {
+            case 'xs':
+                shrinkScale = 0.95;
+                moveDelay = 150;
+                snapDelay = 600;
+                break;
+            case 'mobile':
+                shrinkScale = 0.9;
+                moveDelay = 200;
+                snapDelay = 700;
+                break;
+            case 'tablet':
+                shrinkScale = 0.87;
+                moveDelay = 250;
+                snapDelay = 900;
+                break;
+            case 'sm':
+                shrinkScale = 0.85;
+                moveDelay = 300;
+                snapDelay = 1000;
+                break;
+            case 'md':
+                shrinkScale = 0.83;
+                moveDelay = 350;
+                snapDelay = 1100;
+                break;
+            default: // lg, xl
+                shrinkScale = 0.85;
+                moveDelay = 300;
+                snapDelay = 1200;
+        }
         
         // Step 1: Shrink the picture slightly
         pictureBlock.style.transform = `translate(-50%, -50%) scale(${shrinkScale})`;
@@ -227,7 +273,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }, snapDelay);
         
         // Step 4: As picture snaps into place, animate blocks emerging from behind
-        const blocksDelay = isMobile() ? 1400 : 2000;
+        let blocksDelay;
+        switch(screenSize) {
+            case 'xs':
+                blocksDelay = 1200;
+                break;
+            case 'mobile':
+                blocksDelay = 1400;
+                break;
+            case 'tablet':
+                blocksDelay = 1600;
+                break;
+            case 'sm':
+                blocksDelay = 1700;
+                break;
+            case 'md':
+                blocksDelay = 1800;
+                break;
+            default: // lg, xl
+                blocksDelay = 2000;
+        }
         setTimeout(() => {
             animateBlocksFromBehind();
         }, blocksDelay);
@@ -255,11 +320,41 @@ document.addEventListener('DOMContentLoaded', function() {
                 backgroundColor = '#4C4C44';
             }
             
-            // Responsive initial size and animation duration
-            const initialWidth = isSmallMobile() ? 60 : 80;
-            const initialHeight = isSmallMobile() ? 40 : 60;
-            const animationDuration = isMobile() ? 0.4 : 0.6;
-            const borderRadius = isSmallMobile() ? 10 : 15;
+            // Responsive initial size and animation duration based on screen size
+            const screenSize = getScreenSize();
+            let initialWidth, initialHeight, animationDuration, borderRadius;
+            
+            switch(screenSize) {
+                case 'xs':
+                    initialWidth = 50;
+                    initialHeight = 35;
+                    animationDuration = 0.3;
+                    borderRadius = 8;
+                    break;
+                case 'mobile':
+                    initialWidth = 60;
+                    initialHeight = 40;
+                    animationDuration = 0.4;
+                    borderRadius = 10;
+                    break;
+                case 'tablet':
+                    initialWidth = 70;
+                    initialHeight = 50;
+                    animationDuration = 0.5;
+                    borderRadius = 12;
+                    break;
+                case 'sm':
+                    initialWidth = 80;
+                    initialHeight = 60;
+                    animationDuration = 0.6;
+                    borderRadius = 15;
+                    break;
+                default: // md, lg, xl
+                    initialWidth = 80;
+                    initialHeight = 60;
+                    animationDuration = 0.6;
+                    borderRadius = 15;
+            }
             
             // Set initial styles (start from picture center, small size)
             animatedBlock.style.cssText = `
@@ -278,10 +373,40 @@ document.addEventListener('DOMContentLoaded', function() {
             
             document.body.appendChild(animatedBlock);
             
-            // Responsive stagger delay
-            const staggerDelay = isMobile() ? 60 : 100;
-            const animationTime = isMobile() ? 400 : 580;
-            const textDelay = isMobile() ? 200 : 300;
+            // Responsive stagger delay based on screen size
+            let staggerDelay, animationTime, textDelay;
+            
+            switch(screenSize) {
+                case 'xs':
+                    staggerDelay = 40;
+                    animationTime = 300;
+                    textDelay = 150;
+                    break;
+                case 'mobile':
+                    staggerDelay = 60;
+                    animationTime = 400;
+                    textDelay = 200;
+                    break;
+                case 'tablet':
+                    staggerDelay = 70;
+                    animationTime = 450;
+                    textDelay = 220;
+                    break;
+                case 'sm':
+                    staggerDelay = 80;
+                    animationTime = 500;
+                    textDelay = 250;
+                    break;
+                case 'md':
+                    staggerDelay = 90;
+                    animationTime = 540;
+                    textDelay = 280;
+                    break;
+                default: // lg, xl
+                    staggerDelay = 100;
+                    animationTime = 580;
+                    textDelay = 300;
+            }
             
             // Animate to final position with delay
             setTimeout(() => {
@@ -331,17 +456,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         if (block.id === 'educationBlock') {
-            // Smooth sequential flow for both education and experience items
-            const educationItems = block.querySelectorAll('.modern-edu');
-            const experienceItems = block.querySelectorAll('.modern-exp');
+            // Smooth sequential flow for education items
+            const educationItems = block.querySelectorAll('.education-item');
             
-            // Animate education items first
+            // Animate education items with staggered timing
             educationItems.forEach((item, index) => {
-                item.style.transitionDelay = `${200 + (index * 200)}ms`;
-            });
-            
-            // Then animate experience items with staggered timing
-            experienceItems.forEach((item, index) => {
                 item.style.transitionDelay = `${200 + (index * 150)}ms`;
             });
         }
@@ -451,4 +570,33 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
+
+    // Handle window resize for responsive layout adjustments
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            // Only handle resize if animation has started
+            if (animationStarted && pictureBlock.classList.contains('moved')) {
+                // Recalculate grid positioning for moved picture
+                const pictureGridArea = document.createElement('div');
+                pictureGridArea.style.gridArea = 'picture';
+                pictureGridArea.style.visibility = 'hidden';
+                document.querySelector('.container').appendChild(pictureGridArea);
+                
+                const rect = pictureGridArea.getBoundingClientRect();
+                document.querySelector('.container').removeChild(pictureGridArea);
+                
+                // Smoothly adjust picture position
+                pictureBlock.style.transition = 'all 0.3s ease';
+                pictureBlock.style.top = rect.top + 'px';
+                pictureBlock.style.left = rect.left + 'px';
+                
+                // Reset transition after adjustment
+                setTimeout(() => {
+                    pictureBlock.style.transition = '';
+                }, 300);
+            }
+        }, 250); // Debounce resize events
+    });
 });
