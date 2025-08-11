@@ -218,8 +218,24 @@ body.dark-theme .spinning-icon svg {
   color: #4C372F !important;
 }
 
-/* Mobile positioning for spinning icon */
-@media (max-width: 767px) {
+/* Mobile positioning for spinning icon - mobile devices only */
+@media (max-width: 767px) and (max-height: 1024px) {
+  .spinning-icon {
+    top: 12px;
+    left: 15px;
+    width: 45px;
+    height: 45px;
+    transform: none;
+  }
+
+  .spinning-icon svg {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+/* Alternative: Target touch devices specifically for small screens */
+@media (max-width: 767px) and (orientation: portrait) and (hover: none) and (pointer: coarse) {
   .spinning-icon {
     top: 12px;
     left: 15px;
