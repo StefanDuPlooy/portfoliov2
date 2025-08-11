@@ -446,6 +446,21 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add the text-animated class to trigger CSS animations
         block.classList.add('text-animated');
         
+        // Start spinning icon when header block starts animating
+        if (block.id === 'headerBlock') {
+            const spinningIcon = document.querySelector('.spinning-icon');
+            if (spinningIcon) {
+                // Show and start with fast spin
+                spinningIcon.style.opacity = '1';
+                spinningIcon.classList.add('startup-spin');
+                setTimeout(() => {
+                    // Transition to normal continuous spinning
+                    spinningIcon.classList.remove('startup-spin');
+                    spinningIcon.classList.add('started');
+                }, 1500);
+            }
+        }
+        
         // Creative staggered animations for blocks with multiple items
         if (block.id === 'skillsBlock') {
             // Rapid-fire cascade effect
@@ -532,19 +547,7 @@ document.addEventListener('DOMContentLoaded', function() {
         themeToggle.classList.add('visible');
     }, 4000);
     
-    // Start spinning icon animation after it appears
-    setTimeout(() => {
-        const spinningIcon = document.querySelector('.spinning-icon');
-        if (spinningIcon) {
-            // Start with fast spin
-            spinningIcon.classList.add('startup-spin');
-            setTimeout(() => {
-                // Transition to normal continuous spinning
-                spinningIcon.classList.remove('startup-spin');
-                spinningIcon.classList.add('started');
-            }, 1500);
-        }
-    }, 5000);
+    // Spinning icon will be triggered when header block appears
     
     function addFloatingEffect() {
         cvBlocks.forEach((block, index) => {

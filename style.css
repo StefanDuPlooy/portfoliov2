@@ -144,22 +144,21 @@ body.dark-theme .spinning-icon.started {
 /* Spinning Icon */
 .spinning-icon {
   position: absolute;
-  top: 25%;
-  left: 25px;
+  top: 50%;
+  left: 50px;
   transform: translateY(-50%);
-  width: 70px;
-  height: 70px;
+  width: 90px;
+  height: 90px;
   z-index: 1001;
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  animation: spinningIconEntrance 1s ease-out 5s forwards;
 }
 
 .spinning-icon svg {
-  width: 70px;
-  height: 70px;
+  width: 90px;
+  height: 90px;
   color: #4c4c44 !important;
   transform-origin: center;
 }
