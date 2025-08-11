@@ -218,6 +218,22 @@ body.dark-theme .spinning-icon svg {
   color: #4C372F !important;
 }
 
+/* Mobile positioning for spinning icon */
+@media (max-width: 767px) {
+  .spinning-icon {
+    top: 12px;
+    left: 15px;
+    width: 45px;
+    height: 45px;
+    transform: none;
+  }
+
+  .spinning-icon svg {
+    width: 45px;
+    height: 45px;
+  }
+}
+
 /* Fast spin classes for theme changes */
 .spinning-icon.theme-change-spin svg {
   animation: fastSpin 1.5s ease-out !important;
