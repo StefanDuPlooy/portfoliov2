@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const pictureBlock = document.getElementById('pictureBlock');
     const cvBlocks = document.querySelectorAll('.cv-block');
     const themeToggle = document.getElementById('themeToggle');
+    const topInstruction = document.getElementById('topInstruction');
+    const bottomNotice = document.getElementById('bottomNotice');
     const body = document.body;
     
     // Animation sequence controller
@@ -10,7 +12,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Theme toggle functionality
     let isDarkTheme = false;
     
-    themeToggle.addEventListener('click', function() {
+    // Responsive detection
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+    
+    function isSmallMobile() {
+        return window.innerWidth <= 480;
+    }
+    
+    function isTablet() {
+        return window.innerWidth > 768 && window.innerWidth <= 1024;
+    }
+    
+    // Touch device detection
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // Theme toggle with improved touch support
+    function handleThemeToggle() {
         isDarkTheme = !isDarkTheme;
         
         // Trigger fast spin on spinning icon
@@ -139,19 +158,35 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             themeToggle.style.transform = '';
         }, 150);
-    });
+    }
     
-    // Start animation after page load
-    setTimeout(() => {
-        if (!animationStarted) {
-            startAnimation();
-        }
-    }, 2000);
+    // Add event listeners for theme toggle with touch support
+    if (isTouchDevice) {
+        themeToggle.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            handleThemeToggle();
+        }, { passive: false });
+    } else {
+        themeToggle.addEventListener('click', handleThemeToggle);
+    }
     
-    // Also start animation on picture click for immediate interaction
+    // Start animation only on picture click
     pictureBlock.addEventListener('click', function() {
         if (!animationStarted) {
-            startAnimation();
+            // Fade out both instruction texts first
+            topInstruction.style.opacity = '0';
+            bottomNotice.style.opacity = '0';
+            
+            // Smoothly scroll to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            
+            // Wait for text to fade, then start animation
+            setTimeout(() => {
+                startAnimation();
+            }, 400); // Match the CSS transition duration
         }
     });
     
@@ -168,28 +203,34 @@ document.addEventListener('DOMContentLoaded', function() {
         const rect = pictureGridArea.getBoundingClientRect();
         document.querySelector('.container').removeChild(pictureGridArea);
         
+        // Responsive animation timing and scaling
+        const shrinkScale = isSmallMobile() ? 0.9 : 0.85;
+        const moveDelay = isMobile() ? 200 : 300;
+        const snapDelay = isMobile() ? 800 : 1200;
+        
         // Step 1: Shrink the picture slightly
-        pictureBlock.style.transform = 'translate(-50%, -50%) scale(0.85)';
+        pictureBlock.style.transform = `translate(-50%, -50%) scale(${shrinkScale})`;
         
         // Step 2: Move to calculated grid position while maintaining size
         setTimeout(() => {
             // Move to top-left corner of grid area to align with final position
             pictureBlock.style.top = rect.top + 'px';
             pictureBlock.style.left = rect.left + 'px';
-            pictureBlock.style.transform = 'translate(0, 0) scale(0.85)';
-        }, 300);
+            pictureBlock.style.transform = `translate(0, 0) scale(${shrinkScale})`;
+        }, moveDelay);
         
         // Step 3: Snap into grid and resize to fit
         setTimeout(() => {
             // Keep the transform origin at top-left for smooth growth
             pictureBlock.style.transformOrigin = 'top left';
             pictureBlock.classList.add('moved');
-        }, 1200);
+        }, snapDelay);
         
         // Step 4: As picture snaps into place, animate blocks emerging from behind
+        const blocksDelay = isMobile() ? 1400 : 2000;
         setTimeout(() => {
             animateBlocksFromBehind();
-        }, 2000);
+        }, blocksDelay);
     }
     
     function animateBlocksFromBehind() {
@@ -214,22 +255,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 backgroundColor = '#4C4C44';
             }
             
+            // Responsive initial size and animation duration
+            const initialWidth = isSmallMobile() ? 60 : 80;
+            const initialHeight = isSmallMobile() ? 40 : 60;
+            const animationDuration = isMobile() ? 0.4 : 0.6;
+            const borderRadius = isSmallMobile() ? 10 : 15;
+            
             // Set initial styles (start from picture center, small size)
             animatedBlock.style.cssText = `
                 position: fixed;
                 top: ${pictureCenterY}px;
                 left: ${pictureCenterX}px;
-                width: 80px;
-                height: 60px;
+                width: ${initialWidth}px;
+                height: ${initialHeight}px;
                 background: ${backgroundColor};
-                border-radius: 15px;
+                border-radius: ${borderRadius}px;
                 transform: translate(-50%, -50%) scale(0.3);
-                transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                transition: all ${animationDuration}s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                 z-index: 50;
                 box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             `;
             
             document.body.appendChild(animatedBlock);
+            
+            // Responsive stagger delay
+            const staggerDelay = isMobile() ? 60 : 100;
+            const animationTime = isMobile() ? 400 : 580;
+            const textDelay = isMobile() ? 200 : 300;
             
             // Animate to final position with delay
             setTimeout(() => {
@@ -259,9 +311,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Animate text content after block is fully visible
                     setTimeout(() => {
                         animateBlockText(block, index);
-                    }, 300);
-                }, 580);
-            }, index * 100);
+                    }, textDelay);
+                }, animationTime);
+            }, index * staggerDelay);
         });
     }
     
@@ -303,15 +355,52 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Add hover effects and interactions
+    // Add hover effects and touch interactions
     cvBlocks.forEach(block => {
-        block.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.05)';
-        });
-        
-        block.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1)';
-        });
+        if (isTouchDevice) {
+            // Touch device interactions
+            let touchStartTime;
+            let touchMoved = false;
+            
+            block.addEventListener('touchstart', function(e) {
+                touchStartTime = Date.now();
+                touchMoved = false;
+                this.style.transform = 'scale(1.02)';
+                this.style.transition = 'transform 0.1s ease';
+            }, { passive: true });
+            
+            block.addEventListener('touchmove', function() {
+                touchMoved = true;
+                this.style.transform = 'scale(1)';
+            }, { passive: true });
+            
+            block.addEventListener('touchend', function() {
+                const touchDuration = Date.now() - touchStartTime;
+                
+                if (!touchMoved && touchDuration < 300) {
+                    // Quick tap - add a subtle feedback
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 100);
+                } else {
+                    this.style.transform = 'scale(1)';
+                }
+                
+                this.style.transition = 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            }, { passive: true });
+        } else {
+            // Mouse interactions for non-touch devices
+            block.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+                this.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            });
+            
+            block.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.transition = 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            });
+        }
     });
     
     // Add subtle floating animation after everything is loaded

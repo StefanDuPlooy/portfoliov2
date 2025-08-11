@@ -8,19 +8,31 @@ body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   background: #131112;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   transition: background-color 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-size: clamp(14px, 2.5vmin, 18px);
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 /* Theme Toggle Button */
 .theme-toggle {
-  position: fixed;
-  top: 35px;
-  right: 35px;
-  width: 50px;
-  height: 50px;
-  background: rgba(212, 199, 180, 0.9);
-  border: none;
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid rgba(76, 76, 68, 0.3) !important;
   border-radius: 50%;
   cursor: pointer;
   z-index: 1000;
@@ -28,15 +40,21 @@ body {
   align-items: center;
   justify-content: center;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
   opacity: 0;
-  transform: scale(0.8);
   pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
 }
 
 .theme-toggle.visible {
-  opacity: 1;
+  opacity: 1 !important;
   transform: scale(1);
   pointer-events: auto;
 }
@@ -79,9 +97,9 @@ body {
 }
 
 .theme-toggle svg {
-  width: 24px;
-  height: 24px;
-  color: #131112;
+  width: 20px;
+  height: 20px;
+  color: #4c4c44 !important;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -91,7 +109,9 @@ body.dark-theme {
 }
 
 body.dark-theme .theme-toggle {
-  background: rgba(170, 151, 122, 0.9);
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(170, 151, 122, 0.4) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
 }
 
 body.dark-theme .theme-toggle::after {
@@ -101,14 +121,30 @@ body.dark-theme .theme-toggle::after {
 }
 
 body.dark-theme .theme-toggle svg {
-  color: #4C372F;
+  color: #4C372F !important;
+}
+
+body.dark-theme .theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.22) !important;
+  border-color: rgba(170, 151, 122, 0.5) !important;
+  box-shadow: 0 3px 12px rgba(170, 151, 122, 0.25);
+}
+
+/* Ensure icons stay visible during theme transitions */
+body.dark-theme .theme-toggle.visible {
+  opacity: 1 !important;
+}
+
+body.dark-theme .spinning-icon.started {
+  opacity: 1 !important;
 }
 
 /* Spinning Icon */
 .spinning-icon {
-  position: fixed;
-  top: 63px;
-  left: 50px;
+  position: absolute;
+  top: 30%;
+  left: 25px;
+  transform: translateY(-50%);
   width: 70px;
   height: 70px;
   z-index: 1001;
@@ -122,11 +158,15 @@ body.dark-theme .theme-toggle svg {
 .spinning-icon svg {
   width: 70px;
   height: 70px;
-  color: #4c4c44;
+  color: #4c4c44 !important;
   transform-origin: center;
 }
 
 /* After initial animation, keep spinning continuously */
+.spinning-icon.started {
+  opacity: 1 !important;
+}
+
 .spinning-icon.started svg {
   animation: continuousSpin 6s linear infinite !important;
 }
@@ -174,7 +214,7 @@ body.dark-theme .theme-toggle svg {
 
 /* Dark theme styles for spinning icon */
 body.dark-theme .spinning-icon svg {
-  color: #4C372F;
+  color: #4C372F !important;
 }
 
 /* Fast spin classes for theme changes */
@@ -189,14 +229,14 @@ body.dark-theme .spinning-icon svg {
 
 .container {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  height: fit-content;
   position: relative;
   display: grid;
-  grid-template-columns: 2fr 1.5fr 2.7fr 2.8fr;
-  grid-template-rows: auto 1.8fr 1.8fr 1.5fr;
-  gap: 25px;
-  padding: 25px;
-  overflow: hidden;
+  grid-template-columns: 2fr 1fr 2.7fr 2.8fr;
+  grid-template-rows: auto 0.25fr 0.25fr 0.35fr;
+  gap: 18px;
+  padding: 18px;
   grid-template-areas:
     "header header header header"
     "profile picture education skills"
@@ -210,8 +250,8 @@ body.dark-theme .spinning-icon svg {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;
-  height: 400px;
+  width: 240px;
+  height: 320px;
   background: transparent;
   border: none;
   border-radius: 20px;
@@ -223,10 +263,57 @@ body.dark-theme .spinning-icon svg {
 }
 
 .profile-img {
-  width: 270px;
-  height: 360px;
-  border-radius: 25px;
+  width: 210px;
+  height: 280px;
+  border-radius: 15px;
   object-fit: cover;
+}
+
+/* Top instruction text */
+.top-instruction {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
+  font-size: 1.1em;
+  color: rgba(212, 199, 180, 0.7);
+  text-align: center;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  z-index: 1002;
+  white-space: nowrap;
+}
+
+/* Bottom notice text */
+.bottom-notice {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 400;
+  font-size: 0.9em;
+  color: rgba(212, 199, 180, 0.5);
+  text-align: center;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  z-index: 1002;
+  white-space: nowrap;
 }
 
 /* CV blocks - initially invisible, now with flexible sizing */
@@ -398,8 +485,8 @@ body.dark-theme .spinning-icon svg {
 /* Ensure blocks fill their grid areas completely */
 .cv-block {
   background: #d4c7b4;
-  border-radius: 25px;
-  padding: 20px;
+  border-radius: 15px;
+  padding: 35px;
   color: #131112;
   opacity: 0;
   transform: scale(0);
@@ -410,6 +497,13 @@ body.dark-theme .spinning-icon svg {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
 }
 
 /* Creative "moving in" animations from cardinal directions */
@@ -568,6 +662,8 @@ body.dark-theme .spinning-icon svg {
   text-align: center;
   justify-content: center;
   align-items: center;
+  padding: 12px 70px;
+  position: relative;
 }
 
 #headerBlock h2 {
@@ -851,7 +947,7 @@ body.dark-theme .experience-item .exp-content li::before {
 #profileBlock p {
   font-family: "Inter", sans-serif;
   font-weight: 400;
-  font-size: 1.3em;
+  font-size: 1.1em;
   letter-spacing: -0.01em;
 }
 

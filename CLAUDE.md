@@ -4,44 +4,54 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is an animated, interactive CV/portfolio website for Stefan du Plooy. The site features a unique animation sequence where blocks start from the center of the screen and animate to their final grid positions, creating an engaging visual experience.
+This is an animated, interactive CV/portfolio website for Stefan du Plooy. The site features a unique click-to-start animation sequence where blocks start from the center of the screen and animate to their final grid positions, creating an engaging visual experience.
 
 ## Architecture
 
 The project uses vanilla HTML, CSS, and JavaScript with no build process or dependencies:
 
 - `index.html` - Main HTML structure containing CV content organized into blocks
-- `style.css` - CSS styles with grid layout, animations, and responsive design
-- `script.js` - JavaScript animation controller handling the entrance sequence
+- `style.css` - CSS styles with comprehensive responsive design, grid layout, and animations
+- `script.js` - JavaScript animation controller with theme toggle and touch support
 - `cv.md` - Plain text version of CV content for reference
-- `your-profile-picture.jpg` - Profile image
+- `your-profile-picture.jpg` / `your-profile-picture-2.jpg` - Profile images for light/dark themes
 
 ## Key Components
 
-### Grid Layout System
-The main container uses CSS Grid with defined areas:
-- `grid-template-areas` defines the layout structure at style.css:24-28
-- Responsive grid using `fr` units for flexible column sizing
-- Blocks are positioned using `grid-area` properties
+### Responsive Grid Layout System
+The main container uses CSS Grid with multiple breakpoints:
+- Desktop: 4-column grid (2fr 1fr 2.7fr 2.8fr) with compact row heights (0.25fr 0.25fr 0.35fr)
+- Tablet: 2-column responsive grid
+- Mobile: Single-column stacked layout
+- Responsive typography scaling with clamp() functions
+- Touch-friendly interactions for mobile devices
+- Hidden scrollbars with maintained functionality
 
-### Animation System
-Complex animation sequence controlled by `script.js`:
-1. Picture starts centered and shrinks (scale 0.85)
-2. Picture moves to grid position while maintaining size
-3. Picture snaps into grid and resizes to fit
-4. CV blocks animate from behind the picture to their positions
-5. Text content animates with staggered timing
-6. Floating effects add subtle motion
+### Click-to-Start Animation System
+Interactive animation sequence controlled by `script.js`:
+1. **Initial State**: Profile picture centered with instruction text
+2. **User Click**: Text fades, page scrolls to top smoothly, animation begins after 400ms delay
+3. **Picture Animation**: Shrinks (scale 0.85), moves to grid position, snaps to fit
+4. **Block Animation**: CV blocks animate from behind picture to final positions
+5. **Text Animation**: Staggered text reveals with directional movement effects
+6. **Theme Toggle**: Appears after animation with spinning icon
+
+### Interactive Elements
+- **Click Instructions**: "Click on my face" text above picture, "Best viewed on desktop" below
+- **Theme Toggle**: Button in header (40px) with sliding picture transition between light/dark images
+- **Spinning Icon**: Large animated atom-like icon (70px) in header bar positioned at 30% top, 25px left
+- **Touch Support**: Enhanced touch interactions for mobile devices with proper touch targets
+- **Floating Effects**: Subtle continuous floating animations on CV blocks (3px movement)
 
 ### Block Structure
-CV content is organized into semantic blocks:
-- Header block (name and title)
-- Contact block (phone, location, email, LinkedIn)
-- Profile block (personal summary)
-- Education block (degrees and achievements)
-- Skills block (programming languages, tools, soft skills)
-- Experience block (work history)
-- Projects block (notable projects)
+CV content organized into semantic blocks:
+- Header block (name, title, theme toggle, spinning icon) - 35px padding, relative positioning
+- Contact block (phone, location, email, LinkedIn actions) - modern action buttons
+- Profile block (personal summary) - reduced text size (1.1em)
+- Education block (degrees and achievements) - structured with years and details
+- Skills block (programming languages, tools, databases, soft skills) - tag-based layout
+- Experience block (work history with consolidated bullet points matching cv.md)
+- Projects block (notable projects with descriptions and tools used)
 
 ## Development Commands
 
@@ -62,22 +72,52 @@ python -m http.server 8000  # For local server
 
 ## Animation Timing
 
-The animation sequence is precisely timed:
-- Initial delay: 2000ms
-- Picture shrink: 500ms delay
-- Picture move: 2000ms delay
-- Grid snap: 2800ms delay
-- Block animations: Staggered 100ms intervals
-- Text animations: Variable delays per block type
+The click-to-start animation sequence:
+- **Click Response**: Immediate text fade (400ms) + smooth scroll to top
+- **Animation Start**: 400ms delay after click (waiting for text fade completion)
+- **Picture Shrink**: Mobile 200-300ms, Desktop 300ms delay
+- **Picture Move**: Mobile 800ms, Desktop 1200ms delay  
+- **Block Animations**: Staggered 60-100ms intervals (responsive)
+- **Text Animations**: Variable delays per block type (150-300ms)
+- **Theme Toggle Appearance**: 4000ms after start
+- **Spinning Icon Start**: 5000ms after start with startup spin animation
+
+## Responsive Design
+
+### Breakpoints
+- **≥1600px**: Large desktops - 35px padding, larger typography, 35px gap
+- **≤1400px**: Standard desktops - 35px padding, 16px gap, optimized grid
+- **≤1200px**: Medium screens - 35px padding, 14px gap, compact layout
+- **≤1024px**: Small laptops/large tablets - 30px padding, 2-column grid
+- **≤768px**: Tablets portrait - 28px padding, single column
+- **≤640px**: Mobile devices - 24px padding, smaller typography
+- **≤480px**: Small mobile - 20px padding, minimal spacing
+
+### Theme System
+- **Light Theme**: #131112 background, #D4C7B4/#4C4C44 blocks
+- **Dark Theme**: #4C372F background, #171612/#AA977A blocks
+- **Theme Toggle**: Sliding picture transition with flip animations on blocks
+- **Icon Colors**: Automatic color adaptation with !important declarations for visibility
+- **Profile Pictures**: Automatic swapping between light/dark theme images
 
 ## Styling Approach
 
-- Dark theme (#131112 background)
-- Two main block colors: #D4C7B4 (light blocks) and #4C4C44 (dark blocks)
-- Border radius: 15-20px for rounded corners
-- Hover effects: scale(1.05) transform
-- Floating animation: 3px vertical movement
-- Typography: Inter font family with multiple Google Fonts loaded
+- **Typography**: Multiple Google Fonts (Inter, Space Grotesk, Plus Jakarta Sans, Sora, etc.)
+- **Colors**: Carefully chosen earth tones with high contrast ratios and opacity variations
+- **Animations**: Smooth cubic-bezier transitions and transforms
+- **Accessibility**: Touch-friendly targets, hidden scrollbars, user-select disabled on UI elements
+- **Modern CSS**: Grid layouts, clamp() functions, white-space: nowrap for text consistency
+- **Border Radius**: 15px for modern rounded corners
+- **Box Shadows**: 0 8px 32px rgba(0, 0, 0, 0.3) for depth
+
+## User Experience
+
+- **Click-to-Start**: Prevents animation from starting automatically, user must interact
+- **Instruction Text**: Clear guidance with modern Space Grotesk font
+- **Smooth Scrolling**: Ensures user sees full animation from top of page
+- **Responsive Text**: Single-line text with nowrap for consistent display
+- **Desktop Optimization**: Clear messaging about best viewing experience
+- **Touch-Friendly**: Proper touch targets and interactions for mobile users
 
 ## File Organization
 
